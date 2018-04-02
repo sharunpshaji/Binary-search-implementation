@@ -1,167 +1,73 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-class node
-{
-   public:
-   int data;
-   node *parent,*left,*right;
-   node()
-   {
-      parent=NULL;
-      left=NULL;
-      right=NULL;
-      data=0;
-   }
+    struct node{
+    int data;
+    node *parent = NULL;
+    node *left = NULL;
+    node *right = NULL;
+    };
+
+        class tree{
+        public:
+        node *root;
+        tree() {
+        root = NULL;
+        };
+        void add(int value);
+        void display(node *temp);
+        void Search(int key, node *temp);
+
 };
 
-class bsTree
-{
-   public:
-   node* root=NULL;
+void tree::add(int value){
+    node *temp = new node;
+    temp->data = value;
 
-
-void insert(node* v, int data)
-{
-   node* temp=new node;
-   temp->data=data;
-   if(root==NULL)
-   {
-     root=temp;
-   }
-   else
-   {
-   if(v->data>=data)
-   {
-     if(v->left!=NULL)
-     {
-       insert(v->left,data);
-     }
-     else
-     {
-        v->left=temp;
-        temp->parent=v;
-     }
-   }
-   else
-   {
-     if(v->right!=NULL)
-     {
-       insert(v->right, data);
-     }
-     else
-     {
-       v->right=temp;
-       temp->parent=v;
-     }
-   }
- }
+if (root==NULL){
+    root = temp;
 }
+else{
+        node *present = root;
+    while(temp->parent == NULL){
+        if (present->data << value){
+            if(present->right==NULL){
+                present->right = temp;
+                temp->parent = present;
+            }
+            else{
+                present = present->right;
+            }
+        }
+            else{
+                if(present->left==NULL){
 
+                    present->left=temp;
+                    temp ->parent = present;
+                }
+                else{present = present->left;}
 
-void display(node* v)
-  {
-   if(v==NULL)
-   {
-     return;
-   }
-   display(v->left);
-   cout<<v->data<<"\t";
-   display(v->right);
- }
+            }
 
-
-void deletenode(int key, node* v)
-{
-  node* temp=root;
-  if(v==NULL)
-  {
-    cout<<"\n \nElement not found !!!\nCan not delete the data entered !";
-    return;
-  }
-
-  if(v->left==NULL && v->right==NULL)
-  {
-    node* par;
-    par=v->parent;
-    if(par->data>=v->data)
-    {
-      par->left=NULL;
     }
-    else
-      par->right=NULL;
-    delete v;
+}
+}
+void tree::display(node *temp){
 
-  }
-  else if((v->left==NULL || v->right==NULL ))
-   {
-     node* par;
-     node* schild;
-     par=v->parent;
-     if(v->left==NULL)
-      schild=v->right;
-     else
-      schild=v->left;
+if(temp!=NULL){
+    display(temp->left);
+    cout<<" "<<temp->data<<" "<<endl;
+    display(temp->right);
 
-     if(par->data>=v->data)
-     {
-       par->left=schild;
-       schild->parent=par;
-     }
-     else
-     {
-       par->right=schild;
-       schild->parent=par;
-     }
-    delete v;
+}
+   int main(){
+tree a;
+a.add(1);
+a.add(3);
+a.add(2);
+a.add(5);
+a.add(78);
+a.add(6);
+a.display(a.root);
+      return 0;
    }
-  else
-  {
-    node* maxleft;
-    maxleft=v->left;
-    while(maxleft->right!=NULL)
-    {
-      maxleft=maxleft->right;
-    }
-   if(maxleft->left==NULL)
-   {
-     node* par=maxleft->parent;
-     par->right=NULL;
-     v->data=maxleft->data;
-   }
-   else
-   {
-     if(maxleft->left
-   }
-  }
-}
-
-
-node* searchnode(node* v, int data)
-{
-   node* temp=v;
-if(v!=NULL)
-{
-   if(temp->data==data)
-   {
-     cout<<"\nElement found !!!";
-     return temp;
-   }
-   else if(temp->data>data)
-     return searchnode(temp->left,data);
-   else
-     return searchnode(temp->right, data);
-}
-else
-{
-  cout<<"\nElement not found !";
-  return NULL;
-}
-}
-};
-int main() {
-
-
-
-return 0;
-}
